@@ -247,7 +247,7 @@ Reason=point at infinity
 
 Title=c2pnb176v1 curve tests
 
-PrivateKey=ALICE_cf_c2pnb176v1
+
 -----BEGIN PRIVATE KEY-----
 MDYCAQAwEwYHKoZIzj0CAQYIKoZIzj0DAAQEHDAaAgEBBBUAaZ1jV1jM9meV5iiNGPU/WMSfWOM=
 -----END PRIVATE KEY-----
