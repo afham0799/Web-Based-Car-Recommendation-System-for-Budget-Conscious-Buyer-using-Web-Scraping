@@ -259,7 +259,7 @@ iw3girDLhNzOu3IQ8Ac=
 -----END PUBLIC KEY-----
 
 Availablein = default
-PrivPubKeyPair=ALICE_cf_c2pnb176v1:ALICE_cf_c2pnb176v1_PUB
+
 
 PrivateKey=BOB_cf_c2pnb176v1
 -----BEGIN PRIVATE KEY-----
