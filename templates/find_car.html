@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Index - Gp Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/img/favicon.png" rel="icon">
+  <link href="static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="static/css/main.css" rel="stylesheet">
+
+
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center fixed-top bg-dark">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+          
+          <style>
+            .index-page {
+                padding-top: 100px; /* Adjust as needed */
+            }
+          </style>
+          
+          {% if current_user.is_authenticated %}
+          <a href="/dashboard" class="logo d-flex align-items-center me-auto me-lg-0">
+            <h1 class="sitename">AutoMatch</h1>
+            <span>.</span>
+          </a>
+          {% else %}
+          <a href="/" class="logo d-flex align-items-center me-auto me-lg-0">
+            <h1 class="sitename">AutoMatch</h1>
+            <span>.</span>
+          </a>
+          {% endif %}
+
+
+      
+          <nav id="navmenu" class="navmenu">
+            <ul>
+                {% if current_user.is_authenticated %}
+                <li><a href="/dashboard" class="active">Home</a></li>
+                <li><a href="/dashboard">About</a></li>
+                <li><a href="/dashboard">Top Pick</a></li>
+                <li><a href="/dashboard">Stats</a></li>
+                <li><a href="/find_car">Find Car</a></li>
+                <li><a href="/dashboard">Contact Us</a></li>
+                <li class="nav-li">
+                  <a href="/favorite">
+                      <span class="favorite">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks-fill" viewBox="0 0 16 16">
+                              <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5z"/>
+                              <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1z"/>
+                            </svg>
+                      </span>
+                  </a>
+                </li>
+                {% else %}
+                <li><a href="/" class="active">Home<br></a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#top">Top Pick</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="/find_car">Find Car</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                {% endif %}
+                
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+          
+          {% if current_user.is_authenticated %}
+          <ul class="nav-profile d-flex align-items-center">
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: white;">
+                    <i class="bi bi-person-circle"></i> 
+                    {% if user.username %} 
+                        {{ user.username }} 
+                    {% else %} 
+                        Profile 
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/profile">View Profile</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="btn-getstarted" href="/logout">Logout</a>
+            </li>
+        </ul>       
+        {% else %}
+          <a class="btn-getstarted" href="/login">Login/Register</a> 
+        {% endif %}
+      
+        </div>
+      </header>
+      
+
+      <main class="container mt-4">
+        <h1 class="mb-4">Find Car</h1>
+    
+        <form method="POST" action="/find_car">
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="min_wage">Minimum Wage (RM):</label>
+                    <input type="number" id="min_wage" name="min_wage" class="form-control" placeholder="Enter minimum wage" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="loan_term_years">Loan Term (years):</label>
+                    <select id="loan_term_years" name="loan_term_years" class="form-control" required>
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="coverage_type">Coverage Type:</label>
+                    <select id="coverage_type" name="coverage_type" class="form-control" required>
+                        <option value="comprehensive">Comprehensive</option>
+                        <option value="third party">Third Party</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label for="ncd">No Claims Discount (NCD):</label>
+                    <select id="ncd" name="ncd" class="form-control" required>
+                        <option value="None">None</option>
+                        <option value="1 year">1 year</option>
+                        <option value="2 years">2 years</option>
+                        <option value="3 years">3 years</option>
+                        <option value="4 years">4 years</option>
+                        <option value="5 years">5 years</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    
+        {% if details %}
+        <div class="mt-4">
+            <h2>Calculation Details</h2>
+            <p>The maximum monthly amount that should be spent on a car based on your salary is RM {{ details['max_monthly_spend'] }}</p>
+            <p>The maximum car price you can afford based on your salary is RM {{ details['car_affordability'] }}</p>
+            <p>Down Payment: 10.0% (RM {{ details['down_payment'] }})</p>
+            <p>Estimated yearly insurance cost: RM {{ details['insurance_cost_yearly'] }}</p>
+            <p>Estimated monthly insurance cost: RM {{ details['insurance_cost_monthly'] }}</p>
+            <p>Total monthly cost including insurance: RM {{ details['total_monthly_cost'] }}</p>
+            <p>Number of affordable products found: {{ details['num_affordable_products'] }}</p>
+        </div>
+        {% endif %}
+    
+        <!-- Search Bar -->
+        <div class="mt-4">
+            <label for="brand-search">Search by Brand:</label>
+            <input type="text" id="brand-search" class="form-control" placeholder="Start typing to search..." autocomplete="off">
+            <ul id="brand-suggestions" class="list-group mt-2" style="display: none;"></ul>
+        </div>
+    
+        {% if recommended_cars %}
+        <div class="mt-4">
+            <h2>Recommended Cars</h2>
+            <div class="row" id="car-list">
+              <meta name="csrf-token" content="{{ csrf_token() }}">
+
+                {% for car in recommended_cars %}
+                <div class="col-lg-4 col-md-6 car-item" data-brand="{{ car['Brand'] }}">
+                    <div class="card shadow-sm">
+                        <div class="icon">
+                            <img src="{{ car.Image }}" class="card-img-top" alt="{{ car.Brand }}">
+                        </div>
+                        <div class="card-body">
+                            <a href="https://www.oto.my{{ car['Link'] }}" class="stretched-link" target="_blank">
+                                <h3>Brand: {{ car['Brand'] }}</h3>
+                            </a>
+                            <p>Price: RM {{ car['Price'] }}</p>
+                            <p>Condition: {{ car['Condition'] }}</p>
+                            <p>Mileage: {{ car['Mileage'] }}</p>
+                            <p>Engine: {{ car['Engine'] }}</p>
+                            <p>Transmission: {{ car['Transmission'] }}</p>
+                            <p>Body Type: {{ car['Body Type'] }}</p>
+                            <p>Location: {{ car['Location'] }}</p>
+                        </div>
+                    </div>
+                    <!-- Add to Favorites button -->
+                    {% if current_user.is_authenticated %}
+                    <button class="add-to-favorite" onclick="addToFavorites('{{ car.id }}')">Add to Favorites</button>
+                    {% else %}
+                    <button class="add-to-favorite" onclick="checkLoginAndAddToFavorites('{{ car.id }}')">Add to Favorites</button>
+                    {% endif %}
+                </div><!-- End Car Item -->
+                {% endfor %}
+            </div><!-- End Row -->
+        </div><!-- End Container -->
+        {% endif %}
+    
+        <!-- JavaScript for Autocomplete -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const searchInput = document.getElementById('brand-search');
+                const suggestionsList = document.getElementById('brand-suggestions');
+                const carItems = document.querySelectorAll('.car-item');
+    
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase();
+                    if (query.length > 0) {
+                        fetch(`/autocomplete_brands?query=${query}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                suggestionsList.innerHTML = '';
+                                if (data.length > 0) {
+                                    suggestionsList.style.display = 'block';
+                                    data.forEach(brand => {
+                                        const li = document.createElement('li');
+                                        li.className = 'list-group-item';
+                                        li.textContent = brand;
+                                        li.addEventListener('click', () => {
+                                            searchInput.value = brand;
+                                            suggestionsList.innerHTML = '';
+                                            suggestionsList.style.display = 'none';
+                                            filterCarsByBrand(brand);
+                                        });
+                                        suggestionsList.appendChild(li);
+                                    });
+                                } else {
+                                    suggestionsList.style.display = 'none';
+                                }
+                            });
+                    } else {
+                        suggestionsList.style.display = 'none';
+                    }
+                });
+    
+                // Hide suggestions when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!event.target.closest('#brand-search') && !event.target.closest('#brand-suggestions')) {
+                        suggestionsList.style.display = 'none';
+                    }
+                });
+    
+                function filterCarsByBrand(brand) {
+                    carItems.forEach(car => {
+                        const carBrand = car.getAttribute('data-brand').toLowerCase();
+                        if (carBrand.includes(brand.toLowerCase())) {
+                            car.style.display = '';
+                        } else {
+                            car.style.display = 'none';
+                        }
+                    });
+                }
+            });
+    
+            function getMetaContent(name) {
+                let metaTag = document.querySelector(`meta[name="${name}"]`);
+                return metaTag ? metaTag.getAttribute('content') : null;
+            }
+    
+            function checkLoginAndAddToFavorites(carId) {
+                fetch('/is_logged_in')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.logged_in) {
+                            addToFavorites(carId);
+                        } else {
+                            window.location.href = '/login'; // Redirect to the login page
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+    
+            function addToFavorites(carId) {
+                fetch('/add_to_favorites', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getMetaContent('csrf-token') // Include CSRF token in request headers
+                    },
+                    body: JSON.stringify({ car_id: carId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        </script>
+    </main>
+    
+    
+    
+    
+
+    
+    <footer id="footer" class="footer dark-background">
+
+        <div class="footer-top">
+          <div class="container">
+            <div class="row gy-4">
+              <div class="col-lg-4 col-md-6 footer-about">
+                <a href="/" class="logo d-flex align-items-center">
+                  <span class="sitename">AutoMatch</span>
+                </a>
+                <div class="footer-contact pt-3">
+                  <p>AutoMatch HQ</p>
+                  <p>Kuala Lumpur, Malaysia</p>
+                  <p class="mt-3"><strong>Phone:</strong> <span>+60 12345 6789</span></p>
+                  <p><strong>Email:</strong> <span>automatch.hq@yahoo.com</span></p>
+                </div>
+                <div class="social-links d-flex mt-4">
+                  <a href="https://www.instagram.com/automatch.hq/"><i class="bi bi-instagram"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="copyright">
+          <div class="container text-center">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">AutoMatch</strong> <span>All Rights Reserved</span></p>
+            <div class="credits">
+              <!-- All the links in the footer should remain intact. -->
+              <!-- You can delete the links only if you've purchased the pro version. -->
+              <!-- Licensing information: https://bootstrapmade.com/license/ -->
+              <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+          </div>
+        </div>
+    
+      </footer>
+    
+      <!-- Scroll Top -->
+      <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    
+      <!-- Preloader -->
+      <div id="preloader"></div>
+    
+      <!-- Vendor JS Files -->
+      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="static/vendor/php-email-form/validate.js"></script>
+      <script src="static/vendor/aos/aos.js"></script>
+      <script src="static/vendor/swiper/swiper-bundle.min.js"></script>
+      <script src="static/vendor/glightbox/js/glightbox.min.js"></script>
+      <script src="static/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+      <script src="static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+      <script src="static/vendor/purecounter/purecounter_vanilla.js"></script>
+    
+      <!-- Main JS File -->
+      <script src="static/js/main.js"></script>
+    
+    </body>
+    
+    </html>
